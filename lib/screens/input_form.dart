@@ -1,9 +1,9 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:location/location.dart';
 
 class InputForm extends StatefulWidget {
   @override
@@ -12,6 +12,37 @@ class InputForm extends StatefulWidget {
 
 class _InputFormState extends State<InputForm> {
   File _image;
+  bool _serviceEnabled;
+  PermissionStatus _permissionGranted;
+  LocationData _locationData;
+  bool islocation = false;
+
+  Future getLoc() async {
+    Location location = new Location();
+    islocation = false;
+
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+
+    _locationData = await location.getLocation();
+    setState(() {
+      islocation = true;
+    });
+    print(_locationData.toString());
+  }
 
   Future getImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
@@ -20,6 +51,12 @@ class _InputFormState extends State<InputForm> {
       _image = image;
     });
     print(image.toString());
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getLoc();
   }
 
   @override
@@ -184,9 +221,12 @@ class _InputFormState extends State<InputForm> {
                           ),
                         ),
                         child: TextField(
+                          enabled: false,
                           decoration: InputDecoration(
                             fillColor: Colors.red,
-                            labelText: "PG Name",
+                            labelText: islocation
+                                ? "Lat : ${_locationData.latitude}, Long : ${_locationData.longitude}"
+                                : "PG Location",
                             labelStyle: TextStyle(
                               fontFamily: "Noto Sans",
                               color: Color(0xFF1E5C5A),
@@ -197,7 +237,7 @@ class _InputFormState extends State<InputForm> {
                             errorBorder: InputBorder.none,
                             disabledBorder: InputBorder.none,
                             prefixIcon: Icon(
-                              Icons.location_city,
+                              Icons.location_on,
                               color: Color(0xFF1E5C5A),
                             ),
                           ),
