@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 
 class InputForm extends StatefulWidget {
   @override
@@ -8,6 +11,17 @@ class InputForm extends StatefulWidget {
 }
 
 class _InputFormState extends State<InputForm> {
+  File _image;
+
+  Future getImage() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      _image = image;
+    });
+    print(image.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context, width: 720, height: 1440, allowFontScaling: true);
@@ -54,8 +68,22 @@ class _InputFormState extends State<InputForm> {
                         ),
                       ),
                     ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(30, 0, 0, 30),
+                        child: Text(
+                          "Please fill in the PG Details",
+                          style: TextStyle(
+                            fontFamily: "Noto Sans",
+                            fontSize: 14,
+                            color: Color(0xFF1E4746),
+                          ),
+                        ),
+                      ),
+                    ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
+                      padding: const EdgeInsets.fromLTRB(30, 5, 30, 5),
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50.0),
@@ -90,7 +118,7 @@ class _InputFormState extends State<InputForm> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
+                      padding: const EdgeInsets.fromLTRB(30, 5, 30, 5),
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50.0),
@@ -103,29 +131,46 @@ class _InputFormState extends State<InputForm> {
                             end: Alignment.topRight,
                           ),
                         ),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            fillColor: Colors.red,
-                            labelText: "PG Image",
-                            labelStyle: TextStyle(
-                              fontFamily: "Noto Sans",
-                              color: Color(0xFF1E5C5A),
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: <Widget>[
+                            TextField(
+                              enabled: false,
+                              decoration: InputDecoration(
+                                fillColor: Colors.red,
+                                labelText: "PG Image",
+                                labelStyle: TextStyle(
+                                  fontFamily: "Noto Sans",
+                                  color: Color(0xFF1E5C5A),
+                                ),
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
+                                prefixIcon: Icon(
+                                  Icons.image,
+                                  color: Color(0xFF1E5C5A),
+                                ),
+                              ),
                             ),
-                            border: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                            errorBorder: InputBorder.none,
-                            disabledBorder: InputBorder.none,
-                            prefixIcon: Icon(
-                              Icons.location_city,
-                              color: Color(0xFF1E5C5A),
-                            ),
-                          ),
+                            GestureDetector(
+                              onTap: () {
+                                HapticFeedback.vibrate();
+                                getImage();
+                              },
+                              child: SizedBox(
+                                height: 100.h,
+                                width: 720.w,
+                                child: Text(" "),
+                              ),
+                            )
+                          ],
                         ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
+                      padding: const EdgeInsets.fromLTRB(30, 5, 30, 5),
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50.0),
