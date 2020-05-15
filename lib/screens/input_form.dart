@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:yehlo/screens/sign_in.dart';
 
 class InputForm extends StatefulWidget {
   @override
@@ -11,6 +13,8 @@ class InputForm extends StatefulWidget {
 }
 
 class _InputFormState extends State<InputForm> {
+  final databaseReference = Firestore.instance;
+  final myController = TextEditingController();
   File _image;
   bool _serviceEnabled;
   PermissionStatus _permissionGranted;
@@ -53,10 +57,26 @@ class _InputFormState extends State<InputForm> {
     print(image.toString());
   }
 
+  void createRecord() async {
+    await databaseReference.collection("users").document(userId).setData({
+      'pgName': myController.text,
+      'pgImage': _image.toString(),
+      'pgLocation':
+          "Lat : ${_locationData.latitude}, Long : ${_locationData.longitude}"
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     getLoc();
+  }
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    myController.dispose();
+    super.dispose();
   }
 
   @override
@@ -134,6 +154,7 @@ class _InputFormState extends State<InputForm> {
                           ),
                         ),
                         child: TextField(
+                          controller: myController,
                           decoration: InputDecoration(
                             fillColor: Colors.red,
                             labelText: "PG Name",
@@ -244,7 +265,7 @@ class _InputFormState extends State<InputForm> {
                         ),
                       ),
                     ),
-                    _nextButton(context),
+                    _nextButton(context, createRecord),
                   ],
                 ),
               ),
@@ -256,12 +277,13 @@ class _InputFormState extends State<InputForm> {
   }
 }
 
-Widget _nextButton(BuildContext context) {
+Widget _nextButton(BuildContext context, function()) {
   return MaterialButton(
     splashColor: Colors.transparent,
     highlightColor: Colors.transparent,
     onPressed: () {
       HapticFeedback.vibrate();
+      function();
       Navigator.of(context).pop();
       Navigator.of(context).push(
         MaterialPageRoute(

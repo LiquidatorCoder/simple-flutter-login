@@ -62,4 +62,10 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.google.firebase:firebase-analytics:17.2.2'
+    compile 'com.android.support:multidex:1.0.1'
+}
+android {
+    defaultConfig {
+        multiDexEnabled true
+    }
 }
