@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "682655945835",
+    "firebase_url": "https://yehlo-app.firebaseio.com",
+    "project_id": "yehlo-app",
+    "storage_bucket": "yehlo-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682655945835:android:0fce5ab38e67bfb9f84d2e",
+        "android_client_info": {
+          "package_name": "com.example.yehlo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "682655945835-dg6t68gbkg5j2qj32ljueark4israfeu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.yehlo",
+            "certificate_hash": "a37cd97fba789cb2e40a9f0b875d1b7916662385"
+          }
+        },
+        {
+          "client_id": "682655945835-s6bjdiiaakq1352agittvtp844ui3ipo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDB0jepLK6OS77AABTHJspSiOId-IAWEqY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "682655945835-s6bjdiiaakq1352agittvtp844ui3ipo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

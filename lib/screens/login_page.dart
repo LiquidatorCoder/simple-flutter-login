@@ -48,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
                         "Login",
                         style: TextStyle(
                           fontFamily: "Berkshire Swash",
-                          fontSize: 48,
+                          fontSize: 58,
                           color: Color(0xFF1E4746),
                         ),
                       ),
@@ -72,6 +72,7 @@ Widget _signInButton(BuildContext context) {
     onPressed: () {
       HapticFeedback.vibrate();
       signInWithGoogle().whenComplete(() {
+        Navigator.of(context).pop();
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) {
@@ -116,6 +117,7 @@ Widget _signInButton(BuildContext context) {
               child: Text(
                 'Sign in with Google',
                 style: TextStyle(
+                  fontFamily: "Noto Sans",
                   fontSize: 20,
                   color: Color(0xFFF2F2F2),
                 ),
