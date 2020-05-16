@@ -1,16 +1,88 @@
-# yehlo
+# Simple PG Rental Service App Login
 
-A new Flutter project.
+This is a simple app which lets user log in using firebase and then inuput a PG for sale. This works on both Android and iOS.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+![flutter](https://img.shields.io/badge/Flutter-Framework-green?logo=flutter)
+![Dart](https://img.shields.io/badge/Dart-Language-blue?logo=dart)
+![Size](https://img.shields.io/github/repo-size/LiquidatorCoder/simple-flutter-login?color=green)
+![Stars](https://img.shields.io/github/stars/LiquidatorCoder/simple-flutter-login?color=blue)
 
-A few resources to get you started if this is your first Flutter project:
+The UI for this app was designed by me in Figma.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+![pg_app UI Mockup](demo/design.png)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+This app gets its list of PGs available from Firestore server. If a user adds a PG then it is stored on this server.
+
+## List of Contents
+
+1. [Features](#features)
+2. [Demo](#demo)
+3. [Dependencies](#dependencies)
+4. [Usage](#usage)
+5. [Development](#development)
+6. [Contributors](#contributors)
+7. [To-Do](#to-do)
+
+## Features
+
+- Minimal Design
+- User Auth using Firebase Supported
+- Instantly adds PG in one tap
+- Automatically pickup user location
+- Optimised storage using minimal packages
+- Application size under 10 MB
+
+## Demo
+
+
+| ![](demo/1.jpg) | ![](demo/2.jpg) | ![](demo/3.jpg) |
+| :-------------: | :-------------: | :-------------: |
+|   Login Page    |  Details Page   |  PG carousel    |
+
+| ![](demo/demo.gif) |
+| :----------------: |
+|     Demo Gif       |
+
+## Dependencies
+
+The following packages are needed for the development of this application.
+
+- `firebase_auth: ^0.16.0` for User authentication
+- `google_sign_in: ^4.4.4` for Google Sign-in
+- `flutter_screenutil: ^1.1.0` for responsive UI
+- `image_picker: ^0.6.6+1` for picking image from gallery
+- `location: ^3.0.2` for picking user location
+- `cloud_firestore: ^0.13.5` for storing PG data
+
+More details about these can be found in the [`pubspec.yaml`](https://github.com/LiquidatorCoder/simple-flutter-login/tree/master/pubspec.yaml) file.
+
+## Usage
+
+The application files for Android devices can be found under the [`bin`](https://github.com/LiquidatorCoder/simple-flutter-login/tree/master/bin) folder.
+- [`app-arm64-v8a-release`](/bin/app-arm64-v8a-release.apk) For most users, this will work. It is for ARM x64 based devices.
+- [`app-armeabi-v7a-release`](/bin/app-armeabi-v7a-release.apk) It is for ARM-based devices.
+- [`app-x86_64-release`](/bin/app-x86_64-release.apk) It is for x86 based devices.
+
+
+## Development
+
+Start by forking the repository, and then run `flutter pub get` in the local repository. You are now ready to modify, fix, update, or remove any feature in the app. If you want, you can create pull requests, I will be happy to welcome them.
+>Note: This project requires Flutter Framework to be installed on your machine. You will also need Firebase and Firestore API Keys.
+
+## Contributors
+
+<a href="https://github.com/LiquidatorCoder/simple-flutter-login/graphs/contributors">
+  <img src="https://contributors-img.web.app/image?repo=LiquidatorCoder/simple-flutter-login" />
+</a>
+
+## To Do
+
+- [ ] Add app icon
+- [ ] Add splash screen
+- [x] Refactor the app
+- [ ] Subtle Aniamtions
+- [ ] PG page
+- [ ] Hero Animations
+- [ ] Pull to Refresh
+- [ ] About dev page
