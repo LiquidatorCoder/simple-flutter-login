@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:yehlo/screens/sign_in.dart';
-import 'dart:io';
+import 'package:yehlo/ui/contenttile.dart';
 
 class Carousel extends StatefulWidget {
   @override
@@ -102,106 +100,11 @@ class _CarouselState extends State<Carousel> {
                                   itemCount: data.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          20, 10, 20, 10),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Color(0xFF000000)
-                                                  .withOpacity(0.1),
-                                              spreadRadius: 3,
-                                              blurRadius: 10,
-                                              offset: Offset(0,
-                                                  4), // changes position of shadow
-                                            ),
-                                          ],
-                                          color: Color(0xFFF2F2F2),
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(35),
-                                          ),
-                                        ),
-                                        child: SizedBox(
-                                          height: 300.h,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: <Widget>[
-                                              Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceEvenly,
-                                                children: <Widget>[
-                                                  SizedBox(
-                                                    height: 120.h,
-                                                    width: 350.w,
-                                                    child: ListTile(
-                                                      leading: Icon(
-                                                        Icons.location_city,
-                                                        color:
-                                                            Color(0xFF1E5C5A),
-                                                      ),
-                                                      title: Text(
-                                                        names[index],
-                                                        style: TextStyle(
-                                                          fontSize: 16,
-                                                          fontFamily:
-                                                              "Noto Sans",
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color:
-                                                              Color(0xFF1E5C5A),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 110.h,
-                                                    width: 350.w,
-                                                    child: ListTile(
-                                                      leading: Icon(
-                                                        Icons.location_on,
-                                                        color:
-                                                            Color(0xFF1E5C5A),
-                                                      ),
-                                                      title: Text(
-                                                        locations[index],
-                                                        style: TextStyle(
-                                                          fontSize: 16,
-                                                          fontFamily:
-                                                              "Noto Sans",
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color:
-                                                              Color(0xFF1E5C5A),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                    Radius.circular(35),
-                                                  ),
-                                                  image: DecorationImage(
-                                                      image: FileImage(
-                                                        new File(images[index]),
-                                                      ),
-                                                      fit: BoxFit.cover),
-                                                ),
-                                                child: SizedBox(
-                                                  height: 300.h,
-                                                  width: 300.w,
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
+                                    return ContentTile(
+                                      names: names,
+                                      locations: locations,
+                                      images: images,
+                                      index: index,
                                     );
                                   },
                                 ),
