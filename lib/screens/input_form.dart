@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:yehlo/screens/carousel.dart';
 import 'package:yehlo/screens/sign_in.dart';
 
 class InputForm extends StatefulWidget {
@@ -60,7 +61,7 @@ class _InputFormState extends State<InputForm> {
   void createRecord() async {
     await databaseReference.collection("users").document(userId).setData({
       'pgName': myController.text,
-      'pgImage': _image.toString(),
+      'pgImage': _image.path.toString(),
       'pgLocation':
           "Lat : ${_locationData.latitude}, Long : ${_locationData.longitude}"
     });
@@ -288,7 +289,7 @@ Widget _nextButton(BuildContext context, function()) {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) {
-            return InputForm();
+            return Carousel();
           },
         ),
       );
@@ -319,7 +320,7 @@ Widget _nextButton(BuildContext context, function()) {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Next',
+              'Submit',
               style: TextStyle(
                 fontFamily: "Noto Sans",
                 fontSize: 20,
