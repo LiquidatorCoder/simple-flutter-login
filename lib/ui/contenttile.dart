@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:yehlo/screens/pgview.dart';
 
 class ContentTile extends StatelessWidget {
   const ContentTile({
@@ -83,21 +84,54 @@ class ContentTile extends StatelessWidget {
                   ),
                 ],
               ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(35),
-                  ),
-                  image: DecorationImage(
-                      image: NetworkImage(
-                        images[index],
+              Stack(
+                children: <Widget>[
+                  Hero(
+                    tag: images[index],
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(35),
+                        ),
+                        image: DecorationImage(
+                            image: NetworkImage(
+                              images[index],
+                            ),
+                            fit: BoxFit.cover),
                       ),
-                      fit: BoxFit.cover),
-                ),
-                child: SizedBox(
-                  height: 300.h,
-                  width: 300.w,
-                ),
+                      child: SizedBox(
+                        height: 300.h,
+                        width: 300.w,
+                      ),
+                    ),
+                  ),
+                  Material(
+                    color: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(35),
+                      ),
+                    ),
+                    child: InkWell(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(35),
+                      ),
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return PGView(images[index]);
+                            },
+                          ),
+                        );
+                      },
+                      child: SizedBox(
+                        height: 300.h,
+                        width: 300.w,
+                      ),
+                    ),
+                  )
+                ],
               )
             ],
           ),
