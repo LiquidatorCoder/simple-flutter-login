@@ -22,23 +22,29 @@ This app gets its list of PGs available from Firestore server. If a user adds a 
 4. [Usage](#usage)
 5. [Development](#development)
 6. [Contributors](#contributors)
-7. [To-Do](#to-do)
+7. [To-Do](#todemoDependencies-do)
 
 ## Features
 
 - Minimal Design
 - User Auth using Firebase Supported
 - Instantly adds PG in one tap
-- Automatically pickup user location
+- Automatically pickup user locationDependencies
+- Stores PG Images in Firebase Storage
+- Reduces Size of Images for quick loading
 - Optimised storage using minimal packages
 - Application size under 10 MB
 
 ## Demo
 
 
-| ![](demo/1.jpg) | ![](demo/2.jpg) | ![](demo/3.jpg) |
+| ![](demo/1.jpg) | ![](demo/2.jpg) | ![](demo/3.jpg)    |
+| :-------------: | :-------------: | :-------------:    |
+|   Login Page    |  Details Page   |  Image Uploading   |
+
+| ![](demo/4.jpg) | ![](demo/5.jpg) | ![](demo/6.jpg) |
 | :-------------: | :-------------: | :-------------: |
-|   Login Page    |  Details Page   |  PG carousel    |
+| Image Uploaded  |  PG Carousel    |      PG View    |
 
 | ![](demo/demo.gif) |
 | :----------------: |
@@ -54,6 +60,8 @@ The following packages are needed for the development of this application.
 - `image_picker: ^0.6.6+1` for picking image from gallery
 - `location: ^3.0.2` for picking user location
 - `cloud_firestore: ^0.13.5` for storing PG data
+- `firebase_storage: ^3.1.5` for storing Images
+- `photo_view: ^0.9.2` for Image viewing
 
 More details about these can be found in the [`pubspec.yaml`](https://github.com/LiquidatorCoder/simple-flutter-login/tree/master/pubspec.yaml) file.
 
@@ -82,7 +90,7 @@ Start by forking the repository, and then run `flutter pub get` in the local rep
 - [ ] Add splash screen
 - [x] Refactor the app
 - [ ] Subtle Aniamtions
-- [ ] PG page
-- [ ] Hero Animations
+- [x] PG page
+- [x] Hero Animations
 - [ ] Pull to Refresh
 - [ ] About dev page
