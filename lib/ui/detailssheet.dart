@@ -9,6 +9,8 @@ import 'package:yehlo/ui/inputlocationfield.dart';
 import 'package:yehlo/ui/inputtextfiels.dart';
 import 'package:yehlo/ui/submitbutton.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:firebase_storage/firebase_storage.dart'; // For File Upload To Firestore
+import 'package:path/path.dart' as Path;
 
 class DetailsSheet extends StatefulWidget {
   @override
@@ -19,6 +21,8 @@ class _DetailsSheetState extends State<DetailsSheet> {
   final databaseReference = Firestore.instance;
   final myController = TextEditingController();
   File _image;
+  String _uploadedFileURL;
+  bool isUploading = false;
   bool _serviceEnabled;
   PermissionStatus _permissionGranted;
   LocationData _locationData;
@@ -57,13 +61,31 @@ class _DetailsSheetState extends State<DetailsSheet> {
     setState(() {
       _image = image;
     });
+    uploadFile();
     print(image.toString());
+  }
+
+  Future uploadFile() async {
+    setState(() {
+      isUploading = true;
+    });
+    StorageReference storageReference =
+        FirebaseStorage.instance.ref().child('${Path.basename(_image.path)}');
+    StorageUploadTask uploadTask = storageReference.putFile(_image);
+    await uploadTask.onComplete;
+    print('File Uploaded');
+    storageReference.getDownloadURL().then((fileURL) {
+      setState(() {
+        _uploadedFileURL = fileURL;
+        isUploading = false;
+      });
+    });
   }
 
   void createRecord() async {
     await databaseReference.collection("users").document(userId).setData({
       'pgName': myController.text,
-      'pgImage': _image.path.toString(),
+      'pgImage': _uploadedFileURL,
       'pgLocation':
           "Lat : ${_locationData.latitude}, Long : ${_locationData.longitude}"
     });
@@ -151,7 +173,11 @@ class _DetailsSheetState extends State<DetailsSheet> {
                         enabled: false,
                         decoration: InputDecoration(
                           fillColor: Colors.red,
-                          labelText: "PG Image",
+                          labelText: isUploading
+                              ? "Uploading"
+                              : _uploadedFileURL != null
+                                  ? "Uploaded"
+                                  : "PG Image",
                           labelStyle: TextStyle(
                             fontFamily: "Noto Sans",
                             color: Color(0xFF1E5C5A),
@@ -161,10 +187,20 @@ class _DetailsSheetState extends State<DetailsSheet> {
                           enabledBorder: InputBorder.none,
                           errorBorder: InputBorder.none,
                           disabledBorder: InputBorder.none,
-                          prefixIcon: Icon(
-                            Icons.image,
-                            color: Color(0xFF1E5C5A),
-                          ),
+                          prefixIcon: isUploading
+                              ? Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: CircularProgressIndicator(),
+                                )
+                              : _uploadedFileURL != null
+                                  ? Icon(
+                                      Icons.check_box,
+                                      color: Color(0xFF1E5C5A),
+                                    )
+                                  : Icon(
+                                      Icons.image,
+                                      color: Color(0xFF1E5C5A),
+                                    ),
                         ),
                       ),
                       GestureDetector(
@@ -184,7 +220,67 @@ class _DetailsSheetState extends State<DetailsSheet> {
               ),
               InputLocationField(
                   islocation: islocation, locationData: _locationData),
-              SubmitButton(createRecord),
+              _uploadedFileURL != null && !isUploading
+                  ? SubmitButton(createRecord)
+                  : SizedBox(
+                      height: 170.h,
+                      child: Center(
+                        child: MaterialButton(
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onPressed: null,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50)),
+                          highlightElevation: 0,
+                          padding: EdgeInsets.all(20),
+                          child: Ink(
+                            decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Color(0xffd4d4d4),
+                                    Color(0xffd4d4d4)
+                                  ],
+                                  begin: Alignment.bottomLeft,
+                                  end: Alignment.topRight,
+                                ),
+                                borderRadius: BorderRadius.circular(50.0)),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(50, 20, 50, 20),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text(
+                                    'Submit',
+                                    style: TextStyle(
+                                      fontFamily: "Noto Sans",
+                                      fontSize: 20,
+                                      color: Color(0xFF777777),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 18.0),
+                                    child: Icon(
+                                      Icons.arrow_forward_ios,
+                                      size: 20,
+                                      color: Color(0xFF777777),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        // child: Text(
+                        //   "Submit",
+                        //   style: TextStyle(
+                        //       fontFamily: "Noto Sans",
+                        //       color: Colors.grey,
+                        //       fontSize: 20),
+                        // ),
+                      ),
+                    ),
             ],
           ),
         ),

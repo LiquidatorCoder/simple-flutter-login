@@ -89,8 +89,8 @@ class ContentTile extends StatelessWidget {
                     Radius.circular(35),
                   ),
                   image: DecorationImage(
-                      image: FileImage(
-                        new File(images[index]),
+                      image: NetworkImage(
+                        images[index],
                       ),
                       fit: BoxFit.cover),
                 ),
