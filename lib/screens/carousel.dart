@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:yehlo/screens/input_form.dart';
 import 'package:yehlo/ui/contenttile.dart';
 
 class Carousel extends StatefulWidget {
@@ -31,6 +32,35 @@ class _CarouselState extends State<Carousel> {
   Widget build(BuildContext context) {
     ScreenUtil.init(context, width: 720, height: 1440, allowFontScaling: true);
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton.extended(
+        icon: Icon(
+          Icons.add,
+          color: Color(0xFF1E5C5A),
+        ),
+        label: Text(
+          "Add",
+          style: TextStyle(
+            color: Color(0xFF1E5C5A),
+            fontFamily: "Noto Sans",
+          ),
+        ),
+        backgroundColor: Color(0xff70D9D6),
+        elevation: 10,
+        disabledElevation: 0,
+        focusElevation: 2,
+        highlightElevation: 2,
+        hoverElevation: 2,
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) {
+                return InputForm();
+              },
+            ),
+          );
+        },
+      ),
       body: Stack(
         children: <Widget>[
           Container(

@@ -86,7 +86,7 @@ class _DetailsSheetState extends State<DetailsSheet> {
   void createRecord() async {
     await databaseReference.collection("users").add({
       'pgName': myController.text,
-      'pgImage': _uploadedFileURL,
+      'pgImage': _uploadedFileURL.replaceAll(".jpg", "_600x600.jpg"),
       'pgLocation':
           "Lat : ${_locationData.latitude}, Long : ${_locationData.longitude}"
     });
@@ -191,7 +191,11 @@ class _DetailsSheetState extends State<DetailsSheet> {
                           prefixIcon: isUploading
                               ? Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: CircularProgressIndicator(),
+                                  child: CircularProgressIndicator(
+                                    valueColor:
+                                        new AlwaysStoppedAnimation<Color>(
+                                            Color(0xFF1E5C5A)),
+                                  ),
                                 )
                               : _uploadedFileURL != null
                                   ? Icon(
