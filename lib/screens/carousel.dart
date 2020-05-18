@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:yehlo/screens/input_form.dart';
+import 'package:yehlo/screens/sign_in.dart';
 import 'package:yehlo/ui/contenttile.dart';
 
 class Carousel extends StatefulWidget {
@@ -89,19 +90,32 @@ class _CarouselState extends State<Carousel> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 30, 0, 30),
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          "PGs",
-                          style: TextStyle(
-                            fontFamily: "Berkshire Swash",
-                            fontSize: 58,
-                            color: Color(0xFF1E4746),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 30, 0, 30),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              "PGs",
+                              style: TextStyle(
+                                fontFamily: "Berkshire Swash",
+                                fontSize: 58,
+                                color: Color(0xFF1E4746),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                        Padding(
+                          padding: const EdgeInsets.all(30.0),
+                          child: CircleAvatar(
+                            minRadius: 25,
+                            backgroundImage: NetworkImage(imageUrl),
+                            backgroundColor: Color(0xFF1E4746),
+                          ),
+                        )
+                      ],
                     ),
                     SizedBox(
                       width: 720.w,
@@ -144,7 +158,10 @@ class _CarouselState extends State<Carousel> {
                             return Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                CircularProgressIndicator(),
+                                CircularProgressIndicator(
+                                  valueColor: new AlwaysStoppedAnimation<Color>(
+                                      Color(0xFF1E5C5A)),
+                                ),
                               ],
                             );
                           }
