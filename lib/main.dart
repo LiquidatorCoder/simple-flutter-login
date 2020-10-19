@@ -1,3 +1,4 @@
+import 'package:animated_splash/animated_splash.dart';
 import 'package:flutter/material.dart';
 import 'package:yehlo/screens/login_page.dart';
 
@@ -12,7 +13,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoginPage(),
+      home: AnimatedSplash(
+        imagePath: 'assets/Yeh!o.png',
+          duration: 2500,
+          home: LoginPage()),
     );
   }
 }
